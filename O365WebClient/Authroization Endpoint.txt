@@ -1,0 +1,32 @@
+﻿Authorization Endpoint:
+============================
+https://login.windows.net/common/oauth2/authorize
+?client_id=
+&redirect_uri=
+&response_type=code
+
+Token Endpoint:
+============================
+https://login.windows.net/common/oauth2/token
+?client_id=
+&redirect_uri=
+&client_secret=
+&grant_type=authorization_code
+&code=
+&resource=https://outlook.office365.com
+
+///////////////////////////////////
+https://login.windows.net/common/oauth2/authorize
+?client_id=b753a168-04f2-47b5-af74-a317ab6b12b4
+&redirect_uri=http://localhost:38648/mailboxlogin&response_type=code
+
+///////////////////////////////////
+Post Content-Type: application/x-www-form-urlencoded
+https://login.windows.net/common/oauth2/token
+?client_id=b753a168-04f2-47b5-af74-a317ab6b12b4
+&redirect_uri=http://localhost:38648/mailboxlogincallback
+&client_secret=q3dQopY5NySbi%2FfgtqxxW6gR2C5I0V%2FvDHppB5lHddc%3D
+&grant_type=authorization_code
+&code=AAABAAAAvPM1KaPlrEqdFSBzjqfTGN-N89M7jVoPNvbAXCogp6PcBp2-jjhtoYgNB_NUo3ROZULxDxpaQIBLS4Pu_vdodnx3eBESpXO_ByCQvVvWg8B4WOe5AVLpFD9bOjnKDTaN3xfp89H4EjuPYHMx7wGmWtos0n-MsepYAppoTIlmwnxgLZ90pYCcpN9WUou1ZJo5cfEr7vN_4ZCnln_avkGwRgJld6XnAD4JJQnGI8g_2KPq4cg9Y-9S-zi1yg3TwMGJIk1xJoDyCbB84UW0Jmo2JAIWjbjq-HtjOamsvL4fRI86_IpQjfjSz_sigmOQw-Ls1LibPFG-bta16fggPb23Y2ZXTa7TGsGvRV-8DBIBpg4k7cUtwSSy3HuOPIqVBOoWIX6SiqusJYF_1SZh7HqZ6ds39N4Et9IPaOTk3Jfna8awTZjKyYDRCFwumV3BtNC3e0gi0DnKx7Bz7wYO_sxgx1bwAInnjFiOuuNpNqZGXZicPundW6Q4E66wLVBMgwVqkWkntCsoruHBpcB01F89M8W0qfG9_LzBMhhQJFlUSAn0LAGNvx2GwR1xFBvyOSqcVLqWnqJXPFHFpKrqMgZBjCAA
+&resource=https://outlook.office365.com
+

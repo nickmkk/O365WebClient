@@ -49,6 +49,16 @@ namespace O365WebClient.Controllers
             }
         }
 
+	    public void MailboxLoginCallback()
+	    {
+		    
+	    }
+
+	    public void MailboxLogin(string code)
+	    {
+		    
+	    }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]

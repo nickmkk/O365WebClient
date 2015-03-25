@@ -56,11 +56,25 @@ namespace O365WebClient.Controllers
 		}
 
 		[AllowAnonymous]
+		public ActionResult Mailbox(string code, string accessToken)
+		{
+			var model = new MailboxViewModel()
+			{
+				Code = code,
+				AccessToken = accessToken
+			};
+			return View(model);
+		}
+
+		[AllowAnonymous]
 		public void MailboxLogin(string code)
 		{
 			var rootUrl = AppSettings.GetAppSetting<string>("ida:AuthorizationUri");
 			var clientId = AppSettings.GetAppSetting<string>("ida:ClientID");
-			var redirectUri = "http://localhost:38648/account/mailboxlogin";
+
+			var siteUrl = HttpContext.Request.Url.Scheme + "://" + HttpContext.Request.Url.Authority;
+			var redirectUri = siteUrl + "/account/mailboxlogin";
+
 			if (string.IsNullOrWhiteSpace(code))
 			{
 				var authUrl = rootUrl + "/common/oauth2/authorize?client_id=" + clientId + " &redirect_uri=" + redirectUri + "&response_type=code";
@@ -85,10 +99,12 @@ namespace O365WebClient.Controllers
 
 				var content = new FormUrlEncodedContent(values);
 				var response = client.PostAsync(tokenUrl, content).Result;
+
 				response.EnsureSuccessStatusCode();
 				var responseString = response.Content.ReadAsStringAsync().Result;
 				var deserializedContent = JsonConvert.DeserializeObject<AuthTokenResponse>(responseString);
-				Console.Write(deserializedContent);
+
+				Response.Redirect(siteUrl + "/account/mailbox?code=" + code + "&accesstoken=" + deserializedContent.access_token);
 			}
 		}
 

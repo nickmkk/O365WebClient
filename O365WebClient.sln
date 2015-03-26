@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O365WebClient", "O365WebClient\O365WebClient.csproj", "{D6E1064B-1D7D-4604-92BB-924D85F81409}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O365WebApi", "O365WebApi\O365WebApi.csproj", "{5AA9A75C-7231-43E4-AB43-484816B2B964}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D6E1064B-1D7D-4604-92BB-924D85F81409}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6E1064B-1D7D-4604-92BB-924D85F81409}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6E1064B-1D7D-4604-92BB-924D85F81409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA9A75C-7231-43E4-AB43-484816B2B964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA9A75C-7231-43E4-AB43-484816B2B964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA9A75C-7231-43E4-AB43-484816B2B964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA9A75C-7231-43E4-AB43-484816B2B964}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

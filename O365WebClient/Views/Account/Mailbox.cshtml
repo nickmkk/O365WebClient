@@ -13,5 +13,18 @@
 <span>@Model.AccessToken</span>
 
 <script>
-    //todo: make service calls
+    (function () {
+        jQuery.ajax({
+            url: "http://localhost:21334/api/v1.0/me/messages",
+            type: "GET",
+            headers: { "Authorization": "@Model.AccessToken" },
+            success: function (response) {
+                debugger;
+                // response
+            },
+            error: function (request, errorType, error) {
+                debugger;
+            }
+        });
+    })();
 </script>

@@ -1,0 +1,30 @@
+﻿@model O365WebClient.Models.MailboxViewModel
+
+@{
+    ViewBag.Title = "Mailbox";
+}
+
+<h2>Mailbox</h2>
+
+<label>Code</label>
+<span>@Model.Code</span>
+<br />
+<label>Access Token</label>
+<span>@Model.AccessToken</span>
+
+<script>
+    (function () {
+        jQuery.ajax({
+            url: "http://localhost:21334/api/v1.0/me/messages",
+            type: "GET",
+            headers: { "Authorization": "@Model.AccessToken" },
+            success: function (response) {
+                debugger;
+                // response
+            },
+            error: function (request, errorType, error) {
+                debugger;
+            }
+        });
+    })();
+</script>

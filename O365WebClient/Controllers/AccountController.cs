@@ -32,13 +32,9 @@ namespace O365WebClient.Controllers
 
 
         [AllowAnonymous]
-        public ActionResult Mailbox(string code, string accessToken)
+        public ActionResult Mailbox(string code)
         {
-            var model = new MailboxViewModel()
-            {
-                Code = code,
-                AccessToken = accessToken
-            };
+            var model = new MailboxViewModel() { Code = code };
             return View(model);
         }
 
@@ -57,31 +53,33 @@ namespace O365WebClient.Controllers
                 Response.Redirect(authUrl, true);
                 return;
             }
+            Response.Redirect(siteUrl + "/account/mailbox?code=" + code);
 
-            var tokenUrl = rootUrl + "/common/oauth2/token";
-            var appSecret = AppSettings.GetAppSetting<string>("ida:Password");
 
-            using (var client = new HttpClient())
-            {
-                var values = new Dictionary<string, string>
-				{
-					{ "client_id", clientId },
-					{ "redirect_uri", redirectUri },
-					{ "client_secret", appSecret },
-					{ "grant_type", "authorization_code" },
-					{ "code", code },
-					{ "resource",  "https://outlook.office365.com"}
-				};
+            //var tokenUrl = rootUrl + "/common/oauth2/token";
+            //var appSecret = AppSettings.GetAppSetting<string>("ida:Password");
 
-                var content = new FormUrlEncodedContent(values);
-                var response = client.PostAsync(tokenUrl, content).Result;
+            //using (var client = new HttpClient())
+            //{
+            //    var values = new Dictionary<string, string>
+            //    {
+            //        { "client_id", clientId },
+            //        { "redirect_uri", redirectUri },
+            //        { "client_secret", appSecret },
+            //        { "grant_type", "authorization_code" },
+            //        { "code", code },
+            //        { "resource",  "https://outlook.office365.com"}
+            //    };
 
-                response.EnsureSuccessStatusCode();
-                var responseString = response.Content.ReadAsStringAsync().Result;
-                var deserializedContent = JsonConvert.DeserializeObject<AuthTokenResponse>(responseString);
+            //    var content = new FormUrlEncodedContent(values);
+            //    var response = client.PostAsync(tokenUrl, content).Result;
 
-                Response.Redirect(siteUrl + "/account/mailbox?code=" + code + "&accesstoken=" + deserializedContent.token_type + " " + deserializedContent.access_token);
-            }
+            //    response.EnsureSuccessStatusCode();
+            //    var responseString = response.Content.ReadAsStringAsync().Result;
+            //    var deserializedContent = JsonConvert.DeserializeObject<AuthTokenResponse>(responseString);
+
+            //    Response.Redirect(siteUrl + "/account/mailbox?code=" + code + "&accesstoken=" + deserializedContent.token_type + " " + deserializedContent.access_token);
+            //}
         }
 
         public class AuthTokenResponse

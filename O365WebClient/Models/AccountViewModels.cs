@@ -6,8 +6,6 @@ namespace O365WebClient.Models
 	public class MailboxViewModel
 	{
 		public string Code { get; set; }
-
-		public string AccessToken { get; set; }
 	}
 
     public class ExternalLoginConfirmationViewModel

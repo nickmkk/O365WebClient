@@ -22,7 +22,7 @@ namespace O365WebClient.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -31,39 +31,39 @@ namespace O365WebClient.Controllers
 
 
 
-		[AllowAnonymous]
-		public ActionResult Mailbox(string code, string accessToken)
-		{
-			var model = new MailboxViewModel()
-			{
-				Code = code,
-				AccessToken = accessToken
-			};
-			return View(model);
-		}
+        [AllowAnonymous]
+        public ActionResult Mailbox(string code, string accessToken)
+        {
+            var model = new MailboxViewModel()
+            {
+                Code = code,
+                AccessToken = accessToken
+            };
+            return View(model);
+        }
 
-		[AllowAnonymous]
-		public void MailboxLogin(string code)
-		{
-			var rootUrl = AppSettings.GetAppSetting<string>("ida:AuthorizationUri");
-			var clientId = AppSettings.GetAppSetting<string>("ida:ClientID");
+        [AllowAnonymous]
+        public void MailboxLogin(string code)
+        {
+            var rootUrl = AppSettings.GetAppSetting<string>("ida:AuthorizationUri");
+            var clientId = AppSettings.GetAppSetting<string>("ida:ClientID");
 
-			var siteUrl = HttpContext.Request.Url.Scheme + "://" + HttpContext.Request.Url.Authority;
-			var redirectUri = siteUrl + "/account/mailboxlogin";
+            var siteUrl = HttpContext.Request.Url.Scheme + "://" + HttpContext.Request.Url.Authority;
+            var redirectUri = siteUrl + "/account/mailboxlogin";
 
-			if (string.IsNullOrWhiteSpace(code))
-			{
-				var authUrl = rootUrl + "/common/oauth2/authorize?client_id=" + clientId + " &redirect_uri=" + redirectUri + "&response_type=code";
-				Response.Redirect(authUrl, true);
-				return;
-			}
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                var authUrl = rootUrl + "/common/oauth2/authorize?client_id=" + clientId + " &redirect_uri=" + redirectUri + "&response_type=code";
+                Response.Redirect(authUrl, true);
+                return;
+            }
 
-			var tokenUrl = rootUrl + "/common/oauth2/token";
-			var appSecret = AppSettings.GetAppSetting<string>("ida:Password");
+            var tokenUrl = rootUrl + "/common/oauth2/token";
+            var appSecret = AppSettings.GetAppSetting<string>("ida:Password");
 
-			using (var client = new HttpClient())
-			{
-				var values = new Dictionary<string, string>
+            using (var client = new HttpClient())
+            {
+                var values = new Dictionary<string, string>
 				{
 					{ "client_id", clientId },
 					{ "redirect_uri", redirectUri },
@@ -73,31 +73,31 @@ namespace O365WebClient.Controllers
 					{ "resource",  "https://outlook.office365.com"}
 				};
 
-				var content = new FormUrlEncodedContent(values);
-				var response = client.PostAsync(tokenUrl, content).Result;
+                var content = new FormUrlEncodedContent(values);
+                var response = client.PostAsync(tokenUrl, content).Result;
 
-				response.EnsureSuccessStatusCode();
-				var responseString = response.Content.ReadAsStringAsync().Result;
-				var deserializedContent = JsonConvert.DeserializeObject<AuthTokenResponse>(responseString);
+                response.EnsureSuccessStatusCode();
+                var responseString = response.Content.ReadAsStringAsync().Result;
+                var deserializedContent = JsonConvert.DeserializeObject<AuthTokenResponse>(responseString);
 
-				Response.Redirect(siteUrl + "/account/mailbox?code=" + code + "&accesstoken=" + deserializedContent.access_token);
-			}
-		}
+                Response.Redirect(siteUrl + "/account/mailbox?code=" + code + "&accesstoken=" + deserializedContent.token_type + " " + deserializedContent.access_token);
+            }
+        }
 
-		public class AuthTokenResponse
-		{
-			public string token_type { get; set; }
-			public string expires_in { get; set; }
-			public string expires_on { get; set; }
-			public string not_before { get; set; }
-			public string resource { get; set; }
-			public string access_token { get; set; }
-			public string refresh_token { get; set; }
-			public string scope { get; set; }
-			public string id_token { get; set; }
-			public string pwd_exp { get; set; }
-			public string pwd_url { get; set; }
-		}
+        public class AuthTokenResponse
+        {
+            public string token_type { get; set; }
+            public string expires_in { get; set; }
+            public string expires_on { get; set; }
+            public string not_before { get; set; }
+            public string resource { get; set; }
+            public string access_token { get; set; }
+            public string refresh_token { get; set; }
+            public string scope { get; set; }
+            public string id_token { get; set; }
+            public string pwd_exp { get; set; }
+            public string pwd_url { get; set; }
+        }
 
 
 
@@ -110,9 +110,9 @@ namespace O365WebClient.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -196,7 +196,7 @@ namespace O365WebClient.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -231,8 +231,8 @@ namespace O365WebClient.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

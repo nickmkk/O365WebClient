@@ -26,6 +26,9 @@ namespace O365WebClient
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css"));
+
+            //Set this to false for debugging
+		    BundleTable.EnableOptimizations = false;
 		}
 	}
 }

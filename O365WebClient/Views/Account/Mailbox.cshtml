@@ -6,34 +6,43 @@
 
 <h2>Mailbox</h2>
 
+<button id="refresh">Refresh</button>
+<br/>
+
 <label>Code</label>
 <span>@Model.Code</span>
 
 <script>
+    var tokenGenerator = new AuthTokenGenerator("@Model.Code");
+    var getMessages = function (token) {
+        //see 'http://www.html5rocks.com/en/tutorials/cors/' for implementation details.
+        jQuery.ajax({
+            type: 'GET',
+            url: "http://localhost:23086/api/v1.0/me/messages",
+            contentType: "text/plain",
+            xhrFields: {
+                withCredentials: false
+            },
+            headers: {
+                "Authorization": token
+            },
+            success: function (data, textStatus, jqXhr) {
+                var items = data.value;
+                debugger;
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                debugger;
+                alert('Woops, there was an error making the request.');
+            }
+        });
+    };
+
     (function () {
-        var tokenGenerator = new AuthTokenGenerator("@Model.Code");
-        var tokenHandler = function (token) {
-            //see 'http://www.html5rocks.com/en/tutorials/cors/' for implementation details.
-            jQuery.ajax({
-                type: 'GET',
-                url: "http://localhost:23086/api/v1.0/me/messages",
-                contentType: "text/plain",
-                xhrFields: {
-                    withCredentials: false
-                },
-                headers: {
-                    "Authorization": token
-                },
-                success: function (data, textStatus, jqXhr) {
-                    var items = data.value;
-                    debugger;
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    debugger;
-                    alert('Woops, there was an error making the request.');
-                }
-            });
-        }
-        tokenGenerator.getAccessToken(tokenHandler);
+        tokenGenerator.getAccessToken(getMessages);
     })();
+
+    jQuery("#refresh").click(function () {
+        tokenGenerator.getAccessToken(getMessages);
+    });
+
 </script>

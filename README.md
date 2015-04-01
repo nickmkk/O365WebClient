@@ -5,9 +5,9 @@ An example O365 web client using the Rest APIs from javascript
 Start by setting up your development environment [here][1]
 
 #### Cross Origin Resource Sharing
-For more information on setting up your webapi to support CORS look [here][2] 
+For more information on setting up your webapi to support CORS [look here][2] 
 
-For more information on making a web requests that supports CORS look [here][3]
+For more information on making a web requests that supports CORS [look here][3]
 http://www.html5rocks.com/en/tutorials/cors/
 
 

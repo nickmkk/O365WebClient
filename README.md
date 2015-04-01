@@ -1,5 +1,5 @@
 # O365WebClient
-An example O365 web client using the Rest APIs from javascript
+An example O365 web client using the Rest APIs from Javascript.
 
 #### Development Environment
 Start by setting up your development environment [here][1]

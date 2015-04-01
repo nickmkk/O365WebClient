@@ -8,7 +8,6 @@ Start by setting up your development environment [here][1]
 For more information on setting up your webapi to support CORS [look here][2] 
 
 For more information on making a web requests that supports CORS [look here][3]
-http://www.html5rocks.com/en/tutorials/cors/
 
 
   [1]: https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment

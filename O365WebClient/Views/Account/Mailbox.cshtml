@@ -7,12 +7,13 @@
 <h2>Mailbox</h2>
 
 <button id="refresh">Refresh</button>
-<br/>
+<br />
 
 <label>Code</label>
 <span>@Model.Code</span>
 
 <script>
+    //Get Messages
     var tokenGenerator = new AuthTokenGenerator("@Model.Code");
     var getMessages = function (token) {
         //see 'http://www.html5rocks.com/en/tutorials/cors/' for implementation details.

@@ -1,20 +1,17 @@
 var AuthTokenGenerator = (function () {
     function AuthTokenGenerator(code) {
         this.authCode = code;
-        //todo: figure out how to get the following from config
-        this.apiRootUrl = "http://localhost:23086";
-        this.clientId = "c8779caa-78e9-4039-ad69-ebb1a66324e1";
+        this.appSettings = window.appSettings;
         this.redirectUri = location.origin + "/account/mailboxlogin";
-        this.appSecret = "tPQf1p7TBHHXgl3EjRkIZduY85DleuBYT45qUDtdJsk=";
         this.resource = "https://outlook.office365.com";
     }
     AuthTokenGenerator.prototype.generateToken = function (grantType, code, tokenCallback) {
         var _this = this;
         jQuery.ajax({
             type: 'Post',
-            url: this.apiRootUrl + "/common/oauth2/token",
+            url: this.appSettings.accessTokenUri + "/common/oauth2/token",
             contentType: "application/x-www-form-urlencoded",
-            data: "client_id=" + this.clientId + "&redirect_uri=" + this.redirectUri + "" + "&client_secret=" + this.appSecret + "" + "&grant_type=" + grantType + "&code=" + code + "&resource=" + this.resource,
+            data: "client_id=" + this.appSettings.clientId + "&redirect_uri=" + this.redirectUri + "" + "&client_secret=" + this.appSettings.clientSecret + "" + "&grant_type=" + grantType + "&code=" + code + "&resource=" + this.resource,
             xhrFields: {
                 withCredentials: false
             },
@@ -49,5 +46,10 @@ var AccessToken = (function () {
     function AccessToken() {
     }
     return AccessToken;
+})();
+var AppSettings = (function () {
+    function AppSettings() {
+    }
+    return AppSettings;
 })();
 //# sourceMappingURL=AuthTokenGenerator.js.map

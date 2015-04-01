@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Configuration
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,6 +9,22 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/o365webapp")
+    
+    @*Save the app settings in a global object for later use*@
+    <script>
+        @{
+            var clientId = ConfigurationManager.AppSettings["ida:ClientID"];
+            var clientSecret = ConfigurationManager.AppSettings["ida:Password"];
+            var accessTokenUri = ConfigurationManager.AppSettings["ida:AccessTokenUri"];
+            <text>
+                var appSettings = {
+                    clientId: "@clientId",
+                    clientSecret: "@clientSecret",
+                    accessTokenUri: "@accessTokenUri"
+                };        
+            </text>
+        }
+    </script>
 
 </head>
 <body>
@@ -37,7 +54,7 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-    
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
